@@ -51,9 +51,11 @@ export default function RandomModal({ open, title, onClose }: RandomModalProps) 
     return () => window.removeEventListener('keydown', onKey)
   }, [onClose])
 
-  if (!open) return null
+  // Generate random content when the component mounts (modal is only rendered when `open`)
+  // Using an empty deps array is fine since the component is mounted each time `open` becomes true
+  const data = React.useMemo(() => generateRandomContent(), [])
 
-  const data = generateRandomContent()
+  if (!open) return null
 
   return ReactDOM.createPortal(
     <div style={{ zIndex: 9999 }} className="fixed inset-0 flex items-center justify-center pointer-events-auto">
@@ -64,8 +66,9 @@ export default function RandomModal({ open, title, onClose }: RandomModalProps) 
       <div className="relative z-50 w-[min(880px,92%)] max-w-3xl rounded-lg border border-sky-500 bg-gradient-to-b from-black/70 to-black/60 p-6 shadow-2xl">
         <header className="flex items-start justify-between gap-4">
           <div>
+            {/* Use the provided title when available so the header remains static */}
             <div className="text-xs text-sky-300">{title ?? data.title}</div>
-            <h3 className="text-2xl font-semibold text-white">{data.title}</h3>
+            <h3 className="text-2xl font-semibold text-white">{title ?? data.title}</h3>
             <div className="text-xs text-sky-400 mt-1">ID {data.meta.id} • {data.meta.timestamp}</div>
           </div>
 
