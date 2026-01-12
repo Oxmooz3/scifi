@@ -28,6 +28,14 @@ export default function HUDMenus() {
     console.log('[HUDMenus] press', i)
     setPressedIndex(i)
     setForcedIndex(i)
+
+    // Don't open the modal for the home section; just scroll to top
+    if (MENU_SECTIONS[i]?.id === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      window.setTimeout(() => setPressedIndex((prev) => (prev === i ? null : prev)), 600)
+      return
+    }
+
     setModalTitle(MENU_SECTIONS[i]?.title ?? undefined)
     setModalOpen(true)
     window.setTimeout(() => setPressedIndex((prev) => (prev === i ? null : prev)), 600)

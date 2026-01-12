@@ -28,7 +28,13 @@ function generateRandomContent(seed?: number) {
 
   const rand = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)]
 
-  const paragraphs = new Array(3).fill(0).map(() => rand(snippets))
+  // Generate paragraphs with a fixed source per paragraph so they don't change on re-renders
+  const paragraphs = new Array(3).fill(0).map(() => {
+    const text = rand(snippets)
+    const system = Math.ceil(Math.random() * 12)
+    const node = Math.ceil(Math.random() * 99)
+    return { text, source: `Système ${system} / Node ${node}` }
+  })
 
   return {
     title: rand(titles),
@@ -84,10 +90,10 @@ export default function RandomModal({ open, title, onClose }: RandomModalProps) 
 
         {/* Encadrés avec contenu aléatoire */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {data.paragraphs.map((p, idx) => (
+          {data.paragraphs.map((p: {text: string; source: string}, idx: number) => (
             <div key={idx} className="rounded-md border border-sky-500 bg-black/40 p-4">
-              <div className="text-sm text-sky-100">{p}</div>
-              <div className="mt-2 text-xs text-sky-300 opacity-80">• Source: Système {Math.ceil(Math.random() * 12)} / Node {Math.ceil(Math.random() * 99)}</div>
+              <div className="text-sm text-sky-100">{p.text}</div>
+              <div className="mt-2 text-xs text-sky-300 opacity-80">• Source: {p.source}</div>
             </div>
           ))}
         </div>
