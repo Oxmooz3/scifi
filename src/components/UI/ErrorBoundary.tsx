@@ -35,7 +35,7 @@ export default class ErrorBoundary extends Component<Props, State> {
                 Erreur
               </h1>
               <p className="text-xl text-sci-fi-cyan font-exo mb-6">
-                Une erreur s'est produite
+                Une erreur s&apos;est produite
               </p>
               <button
                 onClick={() => window.location.reload()}

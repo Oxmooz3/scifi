@@ -20,11 +20,11 @@ export default function ServicesSection() {
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-5xl md:text-6xl font-orbitron text-gradient mb-12 text-center"
+          className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-orbitron text-gradient mb-8 xs:mb-10 sm:mb-12 text-center"
         >
           SERVICES
         </motion.h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 gap-4 xs:gap-6 sm:gap-8">
           {services.map((service, index) => (
             <motion.div
               key={service.title}
@@ -32,11 +32,11 @@ export default function ServicesSection() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="hologram-effect p-8 rounded-lg hover:glow-effect transition-all cursor-pointer"
+              className="hologram-effect p-4 xs:p-6 sm:p-8 rounded-lg hover:glow-effect transition-all cursor-pointer"
               whileHover={{ scale: 1.05 }}
             >
-              <div className="text-6xl mb-4">{service.icon}</div>
-              <h3 className="text-2xl font-orbitron text-sci-fi-cyan mb-2">
+              <div className="text-4xl xs:text-5xl sm:text-6xl mb-4">{service.icon}</div>
+              <h3 className="text-lg xs:text-xl sm:text-2xl font-orbitron text-sci-fi-cyan mb-2">
                 {service.title}
               </h3>
             </motion.div>

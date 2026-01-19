@@ -13,17 +13,17 @@ export default function AboutSection() {
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="max-w-4xl z-10"
+        className="max-w-4xl z-10 w-full"
       >
-        <h2 className="text-5xl md:text-6xl font-orbitron text-gradient mb-8">
+        <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-orbitron text-gradient mb-8">
           À PROPOS
         </h2>
-        <div className="hologram-effect p-8 rounded-lg">
-          <p className="text-lg md:text-xl font-exo text-sci-fi-cyan mb-4">
+        <div className="hologram-effect p-4 xs:p-6 sm:p-8 rounded-lg">
+          <p className="text-base xs:text-lg sm:text-lg md:text-xl font-exo text-sci-fi-cyan mb-4">
             Nous sommes une équipe passionnée par les technologies de pointe
-            et l'innovation numérique.
+            et l&apos;innovation numérique.
           </p>
-          <p className="text-base md:text-lg font-exo text-white/80">
+          <p className="text-sm xs:text-base sm:text-base md:text-lg font-exo text-white/80">
             Notre mission est de créer des expériences immersives qui repoussent
             les limites du possible, en combinant art et technologie pour
             façonner le futur du web.

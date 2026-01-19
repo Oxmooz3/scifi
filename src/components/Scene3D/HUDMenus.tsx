@@ -48,14 +48,14 @@ export default function HUDMenus() {
       const n = MENU_SECTIONS.length
 
       // distance from planet: keep a bit farther and scale with viewport
-      const radius = Math.max(220, Math.min(width, height) * 0.28)
+      const radius = Math.max(100, Math.min(width, height) * 0.22)
       const angleOffset = -Math.PI / 2 // start at top
 
-      // spacing constraints
-      const minDist = 220 // minimal center-to-center between boxes
-      const marginX = 110
-      const marginY = 70
-      const minFromPlanet = radius + 48
+      // spacing constraints - smaller on mobile
+      const minDist = width < 394 ? 60 : width < 768 ? 90 : 140 // minimal center-to-center between boxes
+      const marginX = width < 394 ? 25 : width < 768 ? 40 : 70
+      const marginY = width < 394 ? 25 : width < 768 ? 40 : 60
+      const minFromPlanet = radius + (width < 394 ? 50 : width < 768 ? 60 : 80)
 
       // initial placement on the circle around projected planet position
       const next: Array<{ left: number; top: number }> = []
@@ -138,26 +138,33 @@ export default function HUDMenus() {
         const pos = positions[i] ?? { left: 80 + i * 40, top: 80 }
         const isSelected = i === selectedIndex
         const isPressedNow = pressedIndex === i
+        const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+        const isSmallMobile = typeof window !== 'undefined' && window.innerWidth < 475
+        const isTinyMobile = typeof window !== 'undefined' && window.innerWidth < 394
 
         return (
           <div
             key={s.id}
             className={`pointer-events-auto fixed z-50 transform transition-transform duration-200 ${isSelected || isPressedNow ? 'scale-105' : 'scale-100'}`}
-            style={{ width: 220, left: pos.left, top: pos.top, transform: 'translate(-50%, -50%)' }}
+            style={{ 
+              width: isTinyMobile ? 60 : isSmallMobile ? 80 : isMobile ? 100 : 120, 
+              left: pos.left, 
+              top: pos.top, 
+              transform: 'translate(-50%, -50%)' 
+            }}
           >
             <button
               onClick={() => press(i)}
               onKeyDown={(e) => e.key === 'Enter' && press(i)}
-              className={`w-full h-14 flex items-center gap-3 px-3 rounded-md border  border-sky-500 bg-black/40 backdrop-blur-sm text-left transition-shadow duration-200 focus:outline-none ${isSelected || isPressedNow ? 'shadow-lg shadow-sky-500/30 border-sky-300 scale-105' : 'hover:scale-105 hover:shadow-md'}`}
+              className={`w-full h-16 xs:h-20 sm:h-24 md:h-28 lg:h-32 flex flex-col items-center justify-center gap-1 xs:gap-2 sm:gap-2 md:gap-3 p-1 xs:p-2 sm:p-2 md:p-3 rounded-lg border border-sky-500 bg-black/40 backdrop-blur-sm text-center transition-shadow duration-200 focus:outline-none ${isSelected || isPressedNow ? 'shadow-lg shadow-sky-500/30 border-sky-300 scale-105' : 'hover:scale-105 hover:shadow-md'}`}
               aria-pressed={isSelected}
             >
-              <div className={`w-10 h-10 flex-shrink-0 rounded-md flex items-center justify-center text-xs font-bold ${isSelected || isPressedNow ? 'bg-sky-400 text-black' : 'bg-transparent text-sky-200 border border-sky-500'}`}>
+              <div className={`w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6 md:w-8 md:w-10 md:h-10 flex-shrink-0 rounded-md flex items-center justify-center text-xs font-bold mb-1 ${isSelected || isPressedNow ? 'bg-sky-400 text-black' : 'bg-transparent text-sky-200 border border-sky-500'}`}>
                 {s.title.slice(0, 2)}
               </div>
 
-              <div className="flex-1 text-sm">
-                <div className={`font-semibold ${isSelected ? 'text-white' : 'text-sky-100'}`}>{s.title}</div>
-                <div className="text-xs text-sky-300 opacity-80">{s.description}</div>
+              <div className="text-center">
+                <div className={`font-semibold text-xs xs:text-xs sm:text-xs md:text-sm ${isSelected ? 'text-white' : 'text-sky-100'}`}>{s.title}</div>
               </div>
             </button>
           </div>

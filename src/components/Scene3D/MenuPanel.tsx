@@ -23,7 +23,7 @@ export default function MenuPanel({ section, index, isHovered, isActive, onHover
 
   const groupRef = useRef<Group>(null)
   const textRef = useRef<THREE.Group>(null)
-  const lineRef = useRef<THREE.Line>(null)
+  const lineRef = useRef<any>(null)
   const [hovered, setHovered] = useState(false)
 
   // Combinaison d'états pour le rendu (hover local + hover externe + active via scroll)
@@ -80,6 +80,14 @@ export default function MenuPanel({ section, index, isHovered, isActive, onHover
           positions.setXYZ(0, lineStart.x, lineStart.y, lineStart.z)
           positions.setXYZ(1, lineEnd.x, lineEnd.y, lineEnd.z)
           positions.needsUpdate = true
+
+          // Mise à jour du matériau (couleur/opacity) en fonction de l'état actif
+          if (lineRef.current) {
+            const mat = (lineRef.current.material as any)
+            mat.color.set(isActiveNow ? '#00FFFF' : '#0066FF')
+            mat.opacity = isActiveNow ? 0.8 : 0.5
+            mat.needsUpdate = true
+          }
         }
       } catch (e) {
         // Ignorer les erreurs de mise à jour de ligne
@@ -103,17 +111,22 @@ export default function MenuPanel({ section, index, isHovered, isActive, onHover
     return geometry
   }, [])
 
+  // Matériel et objet Line (utilisé via <primitive> pour éviter les conflits de typage JSX/SVG)
+  const lineMaterialRef = useRef(new THREE.LineBasicMaterial({
+    color: '#0066FF',
+    transparent: true,
+    opacity: 0.5,
+    linewidth: 2,
+  }))
+
+  const lineObject = useMemo(() => {
+    return new THREE.Line(lineGeometry, lineMaterialRef.current)
+  }, [lineGeometry])
+
   return (
     <group ref={groupRef}>
       {/* Ligne HUD qui part de la planète */}
-      <line ref={lineRef} geometry={lineGeometry}>
-        <lineBasicMaterial
-          color={isActiveNow ? '#00FFFF' : '#0066FF'}
-          transparent
-          opacity={isActiveNow ? 0.8 : 0.5}
-          linewidth={isActiveNow ? 3 : 2}
-        />
-      </line>
+      <primitive ref={lineRef} object={lineObject} />
 
       {/* Zone cliquable invisible */}
       <mesh

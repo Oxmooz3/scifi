@@ -17,6 +17,7 @@ export default function Scene3D() {
         className="z-10"
         gl={{ antialias: true, alpha: false }}
         dpr={[1, 2]}
+        camera={{ position: CAMERA_POSITION, fov: 75 }}
       >
         <color attach="background" args={['#050508']} />
         <Suspense fallback={null}>

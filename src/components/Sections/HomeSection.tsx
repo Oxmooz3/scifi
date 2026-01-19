@@ -13,7 +13,7 @@ export default function HomeSection() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="text-6xl md:text-8xl font-orbitron text-gradient mb-6"
+          className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-orbitron text-gradient mb-6"
         >
           BIENVENUE
         </motion.h1>
@@ -21,9 +21,9 @@ export default function HomeSection() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="text-xl md:text-2xl text-sci-fi-cyan font-exo"
+          className="text-lg xs:text-xl sm:text-xl md:text-2xl text-sci-fi-cyan font-exo"
         >
-          Dans l'espace numérique du futur
+          Dans l&apos;espace numérique du futur
         </motion.p>
       </div>
     </section>
