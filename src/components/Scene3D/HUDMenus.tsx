@@ -52,10 +52,10 @@ export default function HUDMenus() {
       const angleOffset = -Math.PI / 2 // start at top
 
       // spacing constraints - smaller on mobile
-      const minDist = width < 394 ? 50 : width < 768 ? 75 : 140 // minimal center-to-center between boxes
-      const marginX = width < 394 ? 20 : width < 768 ? 35 : 70
-      const marginY = width < 394 ? 20 : width < 768 ? 35 : 60
-      const minFromPlanet = radius + (width < 394 ? 45 : width < 768 ? 55 : 80)
+      const minDist = width < 394 ? 45 : width < 768 ? 70 : 140 // minimal center-to-center between boxes
+      const marginX = width < 394 ? 18 : width < 768 ? 32 : 70
+      const marginY = width < 394 ? 18 : width < 768 ? 32 : 60
+      const minFromPlanet = radius + (width < 394 ? 40 : width < 768 ? 50 : 80)
 
       // initial placement on the circle around projected planet position
       const next: Array<{ left: number; top: number }> = []
@@ -147,7 +147,7 @@ export default function HUDMenus() {
             key={s.id}
             className={`pointer-events-auto fixed z-50 transform transition-transform duration-200 ${isSelected || isPressedNow ? 'scale-105' : 'scale-100'}`}
             style={{ 
-              width: isTinyMobile ? 50 : isSmallMobile ? 70 : isMobile ? 85 : 120, 
+              width: isTinyMobile ? 45 : isSmallMobile ? 65 : isMobile ? 80 : 120, 
               left: pos.left, 
               top: pos.top, 
               transform: 'translate(-50%, -50%)' 
@@ -156,15 +156,15 @@ export default function HUDMenus() {
             <button
               onClick={() => press(i)}
               onKeyDown={(e) => e.key === 'Enter' && press(i)}
-              className={`w-full h-14 xs:h-16 sm:h-20 md:h-24 lg:h-28 flex flex-col items-center justify-center gap-1 xs:gap-2 sm:gap-2 md:gap-3 p-1 xs:p-2 sm:p-2 md:p-3 rounded-lg border border-sky-500 bg-black/40 backdrop-blur-sm text-center transition-shadow duration-200 focus:outline-none ${isSelected || isPressedNow ? 'shadow-lg shadow-sky-500/30 border-sky-300 scale-105' : 'hover:scale-105 hover:shadow-md'}`}
+              className={`w-full h-14 xs:h-16 sm:h-20 md:h-24 lg:h-28 flex flex-col items-center justify-center gap-1 xs:gap-2 sm:gap-2 md:gap-3 p-1 xs:p-2 sm:p-2 md:p-3 rounded-lg border border-sky-500 bg-black/40 backdrop-blur-sm text-center transition-shadow duration-200 focus:outline-none overflow-hidden ${isSelected || isPressedNow ? 'shadow-lg shadow-sky-500/30 border-sky-300 scale-105' : 'hover:scale-105 hover:shadow-md'}`}
               aria-pressed={isSelected}
             >
               <div className={`w-3 h-3 xs:w-4 xs:h-4 sm:w-5 sm:h-5 md:w-6 md:h-8 lg:w-8 lg:h-10 flex-shrink-0 rounded-md flex items-center justify-center text-xs font-bold mb-1 ${isSelected || isPressedNow ? 'bg-sky-400 text-black' : 'bg-transparent text-sky-200 border border-sky-500'}`}>
                 {s.title.slice(0, 2)}
               </div>
 
-              <div className="text-center">
-                <div className={`font-semibold text-xs xs:text-xs sm:text-xs md:text-sm ${isSelected ? 'text-white' : 'text-sky-100'}`}>{s.title}</div>
+              <div className="text-center flex-1 min-w-0">
+                <div className={`font-semibold text-xs xs:text-xs sm:text-xs md:text-sm truncate ${isSelected ? 'text-white' : 'text-sky-100'}`}>{s.title}</div>
               </div>
             </button>
           </div>
